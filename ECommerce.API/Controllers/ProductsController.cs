@@ -54,13 +54,11 @@ namespace ECommerce.API.Controllers
             }
         }
         [HttpPost("add-product")]
-        public async Task<IActionResult> add(ProductDTO productDTO)
+        public async Task<IActionResult> add(AddProductDTO productDTO)
         {
             try
             {
-                var product = mapper.Map<Product>(productDTO);
-
-                await work.ProductRepository.AddAsync(product);
+                await work.ProductRepository.AddAsync(productDTO);
                 return Ok(new ResponseAPI(200, "Item added"));
             }
             catch (Exception ex)
