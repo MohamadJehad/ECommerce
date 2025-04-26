@@ -52,11 +52,7 @@ namespace ECommerce.API.Controllers
         {
             try
             {
-                var category = new Category
-                {
-                    Name = categoryDTO.Name,
-                    Description = categoryDTO.Description,
-                };
+                var category = mapper.Map<Category>(categoryDTO);
 
                  await work.CategoryRepository.AddAsync(category);
                 return Ok(new {message = "Item added"});
@@ -71,12 +67,7 @@ namespace ECommerce.API.Controllers
         {
             try
             {
-                var category = new Category
-                {
-                    Id = categoryDTO.id,
-                    Name = categoryDTO.Name,
-                    Description = categoryDTO.Description,
-                };
+                var category = mapper.Map<Category>(categoryDTO);
 
                 await work.CategoryRepository.UpdateAsync(category);
                 return Ok(new { message = "Item Updated" });
