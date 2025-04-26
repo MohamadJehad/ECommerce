@@ -1,4 +1,5 @@
 ﻿using ECommerce.Core.Interfaces;
+using ECommerce.Core.Services;
 using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ namespace ECommerce.Infrastructure
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IImageManagementService, IImageManagementService>();
             services.AddDbContext<AppDbContext>(op =>
             {
                 op.UseSqlServer(configuration.GetConnectionString("EcomDatabase"));
