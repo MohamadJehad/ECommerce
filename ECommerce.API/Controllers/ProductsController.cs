@@ -21,7 +21,7 @@ namespace ECommerce.API.Controllers
         {
             try
             {
-                var products = await work.ProductRepository.GetAllAsync();
+                var products = await work.ProductRepository.GetAllAsync(x => x.Category, x=> x.Photos);
                 if (products == null)
                 {
                     return BadRequest(new ResponseAPI(400));
