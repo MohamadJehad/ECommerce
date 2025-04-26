@@ -26,5 +26,22 @@ namespace ECommerce.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("get-by-id/{id}")]
+        public async Task<IActionResult> getById(int id)
+        {
+            try
+            {
+                var categories = await work.CategoryRepository.GetByIdAsync(id);
+                if (categories == null)
+                {
+                    return BadRequest();
+                }
+                return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
