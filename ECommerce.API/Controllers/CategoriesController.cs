@@ -1,4 +1,5 @@
-﻿using ECommerce.Core.DTO;
+﻿using AutoMapper;
+using ECommerce.Core.DTO;
 using ECommerce.Core.Entities.Product;
 using ECommerce.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
@@ -8,9 +9,10 @@ namespace ECommerce.API.Controllers
 {
     public class CategoriesController : BaseController
     {
-        public CategoriesController(IUnitOfWork work) : base(work)
+        public CategoriesController(IUnitOfWork work, IMapper mapper) : base(work, mapper)
         {
         }
+
         [HttpGet("get-all")]
         public async Task<IActionResult> get()
         {
