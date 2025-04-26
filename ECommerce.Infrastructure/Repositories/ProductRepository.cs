@@ -2,6 +2,7 @@
 using ECommerce.Core.DTO;
 using ECommerce.Core.Entities.Product;
 using ECommerce.Core.Interfaces;
+using ECommerce.Core.Services;
 using ECommerce.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,12 @@ namespace ECommerce.Infrastructure.Repositories
     {
         private readonly AppDbContext context;
         private readonly IMapper mapper;
-        public ProductRepository(AppDbContext context, IMapper mapper) : base(context)
+        private readonly IImageManagementService imageManagementService;
+        public ProductRepository(AppDbContext context, IMapper mapper, IImageManagementService imageManagementService) : base(context)
         {
+            this.context = context;
             this.mapper = mapper;
+            this.imageManagementService = imageManagementService;
         }
 
         public async Task<bool> AddAsync(AddProductDTO productDTO)
@@ -30,6 +34,17 @@ namespace ECommerce.Infrastructure.Repositories
             var product = mapper.Map<Product>(productDTO);
             await context.Products.AddAsync(product);
             await context.SaveChangesAsync();
+
+            var imagePath = await this.imageManagementService.AddImageAsync(productDTO.Photos, productDTO.Name);
+
+            var photos = imagePath.Select(x => new Photo
+            {
+                ImageName = x,
+                ProductId = product.Id,
+            }).ToList();
+            await context.Photos.AddRangeAsync(photos);
+            await context.SaveChangesAsync();
+
             return true;
         }
     }
