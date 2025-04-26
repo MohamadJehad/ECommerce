@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ECommerce.API.Helper;
 using ECommerce.Core.DTO;
 using ECommerce.Core.Entities.Product;
 using ECommerce.Core.Interfaces;
@@ -21,7 +22,7 @@ namespace ECommerce.API.Controllers
                 var categories = await work.CategoryRepository.GetAllAsync();
                 if (categories == null)
                 {
-                    return BadRequest();
+                    return BadRequest(new ResponseAPI(400));
                 }
                 return Ok(categories);
             }
@@ -38,7 +39,7 @@ namespace ECommerce.API.Controllers
                 var categories = await work.CategoryRepository.GetByIdAsync(id);
                 if (categories == null)
                 {
-                    return BadRequest();
+                    return BadRequest(new ResponseAPI(400));
                 }
                 return Ok(categories);
             }
@@ -55,7 +56,7 @@ namespace ECommerce.API.Controllers
                 var category = mapper.Map<Category>(categoryDTO);
 
                  await work.CategoryRepository.AddAsync(category);
-                return Ok(new {message = "Item added"});
+                return Ok(new ResponseAPI ( 200, "Item added"));
             }
             catch (Exception ex)
             {
@@ -70,7 +71,8 @@ namespace ECommerce.API.Controllers
                 var category = mapper.Map<Category>(categoryDTO);
 
                 await work.CategoryRepository.UpdateAsync(category);
-                return Ok(new { message = "Item Updated" });
+                return Ok(new ResponseAPI(200, "Item Updated"));
+
             }
             catch (Exception ex)
             {
@@ -84,7 +86,7 @@ namespace ECommerce.API.Controllers
             try
             {
                 await work.CategoryRepository.DeleteAsync(id);
-                return Ok(new { message = "Item has been Deleted" });
+                return Ok(new ResponseAPI(200, "Item has been Deleted"));
             }
             catch (Exception ex)
             {
