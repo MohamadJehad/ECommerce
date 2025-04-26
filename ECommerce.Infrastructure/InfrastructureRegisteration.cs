@@ -1,5 +1,8 @@
 ﻿using ECommerce.Core.Interfaces;
+using ECommerce.Infrastructure.Data;
 using ECommerce.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -11,11 +14,14 @@ namespace ECommerce.Infrastructure
 {
     public static class InfrastructureRegisteration
     {
-        public static IServiceCollection infrastructureConfiguration(this IServiceCollection services)
+        public static IServiceCollection infrastructureConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-
+            services.AddDbContext<AppDbContext>(op =>
+            {
+                op.UseSqlServer(configuration.GetConnectionString("EcomDatabase"));
+            });
             return services;
         }
     }
