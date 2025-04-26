@@ -7,7 +7,24 @@ using System.Threading.Tasks;
 namespace ECommerce.Core.DTO
 {
     public record ProductDTO
-    (string name, string description);
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public string CategoryName { get; set; }
+        public virtual List<PhotoDTO> Photos { get; set; }
+    }
     public record UpdateProductDTO
-    (string name, string description, int id);
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Id { get; set; }
+    }
+
+    public record PhotoDTO
+    {
+        public string ImageName { get; set; }
+        public int ProductId { get; set; }
+
+    }
 }

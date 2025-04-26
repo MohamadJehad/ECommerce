@@ -26,7 +26,9 @@ namespace ECommerce.API.Controllers
                 {
                     return BadRequest(new ResponseAPI(400));
                 }
-                return Ok(products);
+
+                var res = mapper.Map<List<ProductDTO>>(products);
+                return Ok(res);
             }
             catch (Exception ex)
             {
@@ -38,12 +40,13 @@ namespace ECommerce.API.Controllers
         {
             try
             {
-                var products = await work.ProductRepository.GetByIdAsync(id);
+                var products = await work.ProductRepository.GetByIdAsync(id, x => x.Category, x=>x.Photos);
                 if (products == null)
                 {
                     return BadRequest(new ResponseAPI(400));
                 }
-                return Ok(products);
+                var res = mapper.Map<ProductDTO>(products);
+                return Ok(res);
             }
             catch (Exception ex)
             {

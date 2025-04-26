@@ -8,8 +8,10 @@ namespace ECommerce.API.Mapping
     {
         public ProductMapping()
         {
-            CreateMap<ProductDTO, Product>().ReverseMap();
+            CreateMap<Product, ProductDTO>().ForMember(x => x.CategoryName, x => x.MapFrom(x => x.Category.Name)).ReverseMap();
+               
             CreateMap<UpdateProductDTO, Product>().ReverseMap();
+            CreateMap<Photo, PhotoDTO>().ReverseMap();
         }
     }
 }
