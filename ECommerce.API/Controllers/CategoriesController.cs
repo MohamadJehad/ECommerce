@@ -1,4 +1,6 @@
-﻿using ECommerce.Core.Interfaces;
+﻿using ECommerce.Core.DTO;
+using ECommerce.Core.Entities.Product;
+using ECommerce.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,6 +39,25 @@ namespace ECommerce.API.Controllers
                     return BadRequest();
                 }
                 return Ok(categories);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPost("add-category")]
+        public async Task<IActionResult> add(CategoryDTO categoryDTO)
+        {
+            try
+            {
+                var category = new Category
+                {
+                    Name = categoryDTO.Name,
+                    Description = categoryDTO.Description,
+                };
+
+                 await work.CategoryRepository.AddAsync(category);
+                return Ok(new {message = "Item added"});
             }
             catch (Exception ex)
             {
