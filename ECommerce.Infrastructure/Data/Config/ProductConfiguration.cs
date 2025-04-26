@@ -15,11 +15,11 @@ namespace ECommerce.Infrastructure.Data.Config
         {
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
             builder.Property(x => x.Description).IsRequired().HasMaxLength(30);
-            builder.Property(x => x.Price).IsRequired().HasColumnType("decimal(18,2)");
+            builder.Property(x => x.NewPrice).IsRequired().HasColumnType("decimal(18,2)");
             builder.HasData(
-                new Product { Id = 1, Name ="First Product", CategoryId = 1, Price = 11, Description= "new D"},
-                new Product { Id = 2, Name = "Seconed Product", CategoryId = 2, Price = 22, Description = "Descrioption" },
-                new Product { Id = 3, Name = "Third Product", CategoryId = 3, Price = 44, Description = "Hello describe" }
+                new Product { Id = 1, Name ="First Product", CategoryId = 1, NewPrice = 11, Description= "new D"},
+                new Product { Id = 2, Name = "Seconed Product", CategoryId = 2, NewPrice = 22, Description = "Descrioption" },
+                new Product { Id = 3, Name = "Third Product", CategoryId = 3, NewPrice = 44, Description = "Hello describe" }
                 );
         }
     }
