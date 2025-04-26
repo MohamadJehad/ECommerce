@@ -35,6 +35,11 @@ namespace ECommerce.Infrastructure.Repositories
             }
         }
 
+        public Task DeleteAsync(T entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IReadOnlyList<T>> GetAllAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
 
         public async Task<IReadOnlyList<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
@@ -48,8 +53,6 @@ namespace ECommerce.Infrastructure.Repositories
         }
 
         public async Task<T> GetByIdAsync(int id) => await _context.Set<T>().FindAsync(id);
-          
-      
 
         public async Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includes)
         {
