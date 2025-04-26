@@ -35,11 +35,6 @@ namespace ECommerce.Infrastructure.Repositories
             }
         }
 
-        public Task DeleteAsync(T entity)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IReadOnlyList<T>> GetAllAsync() => await _context.Set<T>().AsNoTracking().ToListAsync();
 
         public async Task<IReadOnlyList<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)

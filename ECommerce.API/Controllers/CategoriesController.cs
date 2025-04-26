@@ -64,5 +64,39 @@ namespace ECommerce.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPut("update-category")]
+        public async Task<IActionResult> add(UpdateCategoryDTO categoryDTO)
+        {
+            try
+            {
+                var category = new Category
+                {
+                    Id = categoryDTO.id,
+                    Name = categoryDTO.Name,
+                    Description = categoryDTO.Description,
+                };
+
+                await work.CategoryRepository.UpdateAsync(category);
+                return Ok(new { message = "Item Updated" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("delete-category/{id}")]
+        public async Task<IActionResult> delete(int id)
+        {
+            try
+            {
+                await work.CategoryRepository.DeleteAsync(id);
+                return Ok(new { message = "Item has been Deleted" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
