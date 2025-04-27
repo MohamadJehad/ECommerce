@@ -28,10 +28,8 @@ namespace ECommerce.Core.DTO
         public IFormFileCollection Photos { get; set; }
     }
 
-    public record UpdateProductDTO
+    public record UpdateProductDTO : AddProductDTO
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
         public int Id { get; set; }
     }
 

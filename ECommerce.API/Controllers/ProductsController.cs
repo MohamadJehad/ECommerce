@@ -59,7 +59,7 @@ namespace ECommerce.API.Controllers
             try
             {
                 await work.ProductRepository.AddAsync(productDTO);
-                return Ok(new ResponseAPI(200, "Item added"));
+                return Ok(new ResponseAPI(200, "Product added"));
             }
             catch (Exception ex)
             {
@@ -67,13 +67,11 @@ namespace ECommerce.API.Controllers
             }
         }
         [HttpPut("update-product")]
-        public async Task<IActionResult> add(UpdateProductDTO productDTO)
+        public async Task<IActionResult> update(UpdateProductDTO productDTO)
         {
             try
             {
-                var product = mapper.Map<Product>(productDTO);
-
-                await work.ProductRepository.UpdateAsync(product);
+                await work.ProductRepository.UpdateAsync(productDTO);
                 return Ok(new ResponseAPI(200, "Item Updated"));
 
             }
