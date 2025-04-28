@@ -86,7 +86,9 @@ namespace ECommerce.API.Controllers
         {
             try
             {
-                await work.ProductRepository.DeleteAsync(id);
+                var product = await work.ProductRepository.GetByIdAsync(id, x=> x.Photos, x=>x.Category);
+
+                await work.ProductRepository.DeleteAsync(product);
                 return Ok(new ResponseAPI(200, "Item has been Deleted"));
             }
             catch (Exception ex)
