@@ -49,6 +49,20 @@ namespace ECommerce.Infrastructure.Repositories
             return true;
         }
 
+        public async Task<bool> DeleteAsync(Product product)
+        {
+            var photos = await context.Photos.Where(x => x.ProductId == product.Id).ToListAsync();
+            foreach( var item in photos)
+            {
+                imageManagementService.DeleteImage(item.ImageName);
+            }
+
+            context.Remove(product);
+            
+            context.SaveChanges();
+            return true;
+        }
+
         public async Task<bool> UpdateAsync(UpdateProductDTO productDTO)
         {
             if (productDTO == null)
