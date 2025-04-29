@@ -1,4 +1,8 @@
-﻿namespace ECommerce.API.Middleware
+﻿using ECommerce.API.Helper;
+using System.Net;
+using System.Text.Json;
+
+namespace ECommerce.API.Middleware
 {
     public class ExceptionMeddleware
     {
@@ -17,7 +21,12 @@
             }
             catch (Exception ex)
             {
-
+                int statusCode = (int)HttpStatusCode.InternalServerError;
+                context.Response.StatusCode = statusCode;
+                context.Response.ContentType = "application/json";
+                var response = new ApiException(statusCode, ex.Message, ex.StackTrace);
+                var json = JsonSerializer.Serialize(response);
+                await context.Response.WriteAsync(json);
             }
         }
     }
