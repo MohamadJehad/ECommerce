@@ -19,10 +19,18 @@ namespace ECommerce.API.Middleware
             this.memoryCache = memoryCache;
         }
 
-        public async Task TaskAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context)
         {
             try
             {
+                if (IsRequestAllowed(context) == false)
+                {
+                    int statusCodeTooManyRequests = (int)HttpStatusCode.TooManyRequests;
+                    context.Response.StatusCode = statusCodeTooManyRequests;
+                    context.Response.ContentType = "application/json";
+                    var response = new ApiException(statusCodeTooManyRequests, "Too many requests . please try again later");
+                    await context.Response.WriteAsJsonAsync(response);
+                }
                 await next(context);
             }
             catch (Exception ex)
