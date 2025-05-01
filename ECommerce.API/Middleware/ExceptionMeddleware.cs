@@ -23,6 +23,8 @@ namespace ECommerce.API.Middleware
         {
             try
             {
+                ApplySecurity(context);
+
                 if (IsRequestAllowed(context) == false)
                 {
                     int statusCodeTooManyRequests = (int)HttpStatusCode.TooManyRequests;
@@ -71,6 +73,15 @@ namespace ECommerce.API.Middleware
             }
 
             return true;
+        }
+
+        private void ApplySecurity(HttpContext context)
+        {
+            context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+
+            context.Response.Headers["X-XSS-Protection"] = "1;mode=block";
+
+            context.Response.Headers["X-Frame-Option"] = "DENY";
         }
     }
 }
