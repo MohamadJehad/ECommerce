@@ -33,10 +33,10 @@ namespace ECommerce.Infrastructure.Repositories
                 switch(sort)
                 {
                     // to do use enum
-                    case "ProceAsn":
+                    case "PriceAsn":
                         query = query.OrderBy(x => x.NewPrice);
                         break;
-                    case "ProceDesc":
+                    case "PriceDesc":
                         query = query.OrderByDescending(x => x.NewPrice);
                         break;
                     default:
