@@ -25,7 +25,7 @@ namespace ECommerce.Infrastructure.Repositories
             this.imageManagementService = imageManagementService;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAllAsync(string sort)
+        public async Task<IEnumerable<ProductDTO>> GetAllAsync(string sort, int? CategoryId)
         {
             var query = context.Products.Include(x => x.Category).Include(x => x.Photos).AsNoTracking();
             if (!string.IsNullOrEmpty(sort))
@@ -44,6 +44,12 @@ namespace ECommerce.Infrastructure.Repositories
                         break;
                 }
             }
+
+            if (CategoryId != null)
+            {
+                query = query.Where(x => x.CategoryId == CategoryId);
+            }
+
            var res = this.mapper.Map<List<ProductDTO>>(query);
             return res;
         }

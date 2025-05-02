@@ -17,11 +17,11 @@ namespace ECommerce.API.Controllers
         }
 
         [HttpGet("get-all/{sort}")]
-        public async Task<IActionResult> get(string sort)
+        public async Task<IActionResult> get(string sort, int? CategoryId)
         {
             try
             {
-                var products = await work.ProductRepository.GetAllAsync(sort);
+                var products = await work.ProductRepository.GetAllAsync(sort, CategoryId);
                 if (products == null)
                 {
                     return BadRequest(new ResponseAPI(400));
