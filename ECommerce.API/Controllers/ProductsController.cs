@@ -16,12 +16,12 @@ namespace ECommerce.API.Controllers
         {
         }
 
-        [HttpGet("get-all")]
-        public async Task<IActionResult> get()
+        [HttpGet("get-all/{sort}")]
+        public async Task<IActionResult> get(string sort)
         {
             try
             {
-                var products = await work.ProductRepository.GetAllAsync(x => x.Category, x=> x.Photos);
+                var products = await work.ProductRepository.GetAllAsync(sort);
                 if (products == null)
                 {
                     return BadRequest(new ResponseAPI(400));
