@@ -23,13 +23,8 @@ namespace ECommerce.API.Controllers
             try
             {
                 var products = await work.ProductRepository.GetAllAsync(productParams);
-                if (products == null)
-                {
-                    return BadRequest(new ResponseAPI(400));
-                }
-
-                var res = mapper.Map<List<ProductDTO>>(products);
-                return Ok(res);
+                var totalCount = await work.ProductRepository.CountAsync();
+                return Ok(new Pagination<ProductDTO>(productParams.pageNumber, productParams.pageSize, totalCount, products));
             }
             catch (Exception ex)
             {
