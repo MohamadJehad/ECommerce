@@ -16,8 +16,8 @@ namespace ECommerce.API.Controllers
         {
         }
 
-        [HttpGet("get-all/{sort}")]
-        public async Task<IActionResult> get(string sort, int? CategoryId)
+        [HttpGet("get-all")]
+        public async Task<IActionResult> get(string sort, int? CategoryId, int pageSize, int pageNumber)
         {
             try
             {

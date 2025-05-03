@@ -25,25 +25,28 @@ namespace ECommerce.Infrastructure.Repositories
             this.imageManagementService = imageManagementService;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAllAsync(string sort, int? CategoryId)
+        public async Task<IEnumerable<ProductDTO>> GetAllAsync(string sort, int? CategoryId, int pageSize, int pageNumber)
         {
-            var query = context.Products.Include(x => x.Category).Include(x => x.Photos).AsNoTracking();
+            var query = context.Products
+                .Include(x => x.Category)
+                .Include(x => x.Photos)
+                .AsNoTracking();
+
             if (!string.IsNullOrEmpty(sort))
             {
-                switch(sort)
+                query = sort switch
                 {
                     // to do use enum
-                    case "PriceAsn":
-                        query = query.OrderBy(x => x.NewPrice);
-                        break;
-                    case "PriceDesc":
-                        query = query.OrderByDescending(x => x.NewPrice);
-                        break;
-                    default:
-                        query = query.OrderBy(x => x.Name); 
-                        break;
-                }
+                    "PriceAsn" => query.OrderBy(x => x.NewPrice),
+                    "PriceDesc" => query.OrderByDescending(x => x.NewPrice),
+                    _ => query.OrderBy(x => x.Name),
+                };
             }
+
+            pageNumber = pageNumber > 0 ? pageNumber : 1;
+            pageSize = pageSize > 0 ? pageSize : 3;
+
+            query = query.Skip(pageSize * (pageNumber -1)).Take(pageSize);
 
             if (CategoryId != null)
             {
