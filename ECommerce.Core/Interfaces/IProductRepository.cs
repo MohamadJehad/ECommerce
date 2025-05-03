@@ -1,5 +1,6 @@
 ﻿using ECommerce.Core.DTO;
 using ECommerce.Core.Entities.Product;
+using ECommerce.Core.Sharing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace ECommerce.Core.Interfaces
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-        Task<IEnumerable<ProductDTO>> GetAllAsync(string sort, int? CategoryId, int pageSize, int pageNumber);
+        Task<IEnumerable<ProductDTO>> GetAllAsync(ProductParams productParams);
         Task<bool> AddAsync(AddProductDTO productDTO);
         Task<bool> UpdateAsync(UpdateProductDTO productDTO);
         Task<bool> DeleteAsync(Product product);

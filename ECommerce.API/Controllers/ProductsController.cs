@@ -3,6 +3,7 @@ using ECommerce.API.Helper;
 using ECommerce.Core.DTO;
 using ECommerce.Core.Entities.Product;
 using ECommerce.Core.Interfaces;
+using ECommerce.Core.Sharing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,11 +18,11 @@ namespace ECommerce.API.Controllers
         }
 
         [HttpGet("get-all")]
-        public async Task<IActionResult> get(string sort, int? CategoryId, int pageSize, int pageNumber)
+        public async Task<IActionResult> get([FromQuery]ProductParams productParams)
         {
             try
             {
-                var products = await work.ProductRepository.GetAllAsync(sort, CategoryId, pageSize, pageNumber);
+                var products = await work.ProductRepository.GetAllAsync(productParams);
                 if (products == null)
                 {
                     return BadRequest(new ResponseAPI(400));

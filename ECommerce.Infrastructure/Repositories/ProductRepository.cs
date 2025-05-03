@@ -3,6 +3,7 @@ using ECommerce.Core.DTO;
 using ECommerce.Core.Entities.Product;
 using ECommerce.Core.Interfaces;
 using ECommerce.Core.Services;
+using ECommerce.Core.Sharing;
 using ECommerce.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -25,16 +26,16 @@ namespace ECommerce.Infrastructure.Repositories
             this.imageManagementService = imageManagementService;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAllAsync(string sort, int? CategoryId, int pageSize, int pageNumber)
+        public async Task<IEnumerable<ProductDTO>> GetAllAsync(ProductParams productParams)
         {
             var query = context.Products
                 .Include(x => x.Category)
                 .Include(x => x.Photos)
                 .AsNoTracking();
 
-            if (!string.IsNullOrEmpty(sort))
+            if (!string.IsNullOrEmpty(productParams.sort))
             {
-                query = sort switch
+                query = productParams.sort switch
                 {
                     // to do use enum
                     "PriceAsn" => query.OrderBy(x => x.NewPrice),
@@ -43,14 +44,14 @@ namespace ECommerce.Infrastructure.Repositories
                 };
             }
 
-            pageNumber = pageNumber > 0 ? pageNumber : 1;
-            pageSize = pageSize > 0 ? pageSize : 3;
+            int pageNumber = productParams.pageNumber > 0 ? productParams.pageNumber : 1;
+            int pageSize = productParams.pageSize > 0 ? productParams.pageSize : 3;
 
             query = query.Skip(pageSize * (pageNumber -1)).Take(pageSize);
 
-            if (CategoryId != null)
+            if (productParams.CategoryId != null)
             {
-                query = query.Where(x => x.CategoryId == CategoryId);
+                query = query.Where(x => x.CategoryId == productParams.CategoryId);
             }
 
            var res = this.mapper.Map<List<ProductDTO>>(query);
