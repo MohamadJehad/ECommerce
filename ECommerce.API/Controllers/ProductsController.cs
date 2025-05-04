@@ -36,7 +36,7 @@ namespace ECommerce.API.Controllers
         {
             try
             {
-                var products = await work.ProductRepository.GetByIdAsync(id, x => x.Category, x=>x.Photos);
+                var products = await work.ProductRepository.GetByIdAsync(id, x => x.Category, x => x.Photos);
                 if (products == null)
                 {
                     return BadRequest(new ResponseAPI(400));
@@ -82,7 +82,7 @@ namespace ECommerce.API.Controllers
         {
             try
             {
-                var product = await work.ProductRepository.GetByIdAsync(id, x=> x.Photos, x=>x.Category);
+                var product = await work.ProductRepository.GetByIdAsync(id, x => x.Photos, x => x.Category);
 
                 await work.ProductRepository.DeleteAsync(product);
                 return Ok(new ResponseAPI(200, "Item has been Deleted"));
