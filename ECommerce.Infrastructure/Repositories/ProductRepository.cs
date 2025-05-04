@@ -36,10 +36,11 @@ namespace ECommerce.Infrastructure.Repositories
             //filtering by string
             if (!string.IsNullOrEmpty(productParams.Search))
             {
+                var searchWords = productParams.Search.Split(' ');
                 query = query.Where(x => 
-                    (x.Name != null && x.Name.ToLower().Contains(productParams.Search.ToLower()))
-                    ||  
-                    (x.Description != null && x.Description.ToLower().Contains(productParams.Search.ToLower()))
+                    searchWords.All(word => 
+                        (x.Name != null && x.Name.ToLower().Contains(word)) ||
+                        ( x.Description != null && x.Description.ToLower().Contains(word)))
                     );
             }
 
