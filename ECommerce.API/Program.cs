@@ -32,6 +32,7 @@ namespace ECommerce.API
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("CORSPolicy");
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
