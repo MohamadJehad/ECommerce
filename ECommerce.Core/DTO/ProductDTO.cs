@@ -1,30 +1,25 @@
 ﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ECommerce.Core.DTO
 {
     public record ProductDTO
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public decimal NewPrice { get; set; }
         public decimal OldPrice { get; set; }
-        public string CategoryName { get; set; }
-        public virtual List<PhotoDTO> Photos { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
+        public virtual List<PhotoDTO> Photos { get; set; } = new List<PhotoDTO>();
     }
 
     public record AddProductDTO
     {
         public int CategoryId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public decimal NewPrice { get; set; }
         public decimal OldPrice { get; set; }
-        public string CategoryName { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
         public IFormFileCollection Photos { get; set; }
     }
 
@@ -35,7 +30,7 @@ namespace ECommerce.Core.DTO
 
     public record PhotoDTO
     {
-        public string ImageName { get; set; }
+        public string ImageName { get; set; } = string.Empty;
         public int ProductId { get; set; }
 
     }
