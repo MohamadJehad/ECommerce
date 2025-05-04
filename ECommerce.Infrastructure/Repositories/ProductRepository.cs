@@ -33,6 +33,16 @@ namespace ECommerce.Infrastructure.Repositories
                 .Include(x => x.Photos)
                 .AsNoTracking();
 
+            //filtering by string
+            if (!string.IsNullOrEmpty(productParams.Search))
+            {
+                query = query.Where(x => 
+                    (x.Name != null && x.Name.ToLower().Contains(productParams.Search.ToLower()))
+                    ||  
+                    (x.Description != null && x.Description.ToLower().Contains(productParams.Search.ToLower()))
+                    );
+            }
+
             if (!string.IsNullOrEmpty(productParams.sort))
             {
                 query = productParams.sort switch
